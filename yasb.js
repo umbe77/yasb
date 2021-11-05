@@ -31,7 +31,7 @@ app.get("/", (_, res) => {
 	res.end()
 })
 
-app.all("/api", (req, res) => {
+app.all("/api", (_req, res) => {
 	// TODO: Entry point for all http esb flows
 	res.send("done")
 })
