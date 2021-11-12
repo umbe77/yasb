@@ -5,19 +5,19 @@ const { createLogger, format, transports } = winston
 
 // TODO: Manage logger configuration from file or env variables
 const logger = createLogger({
-  format: format.combine(
-    format.timestamp(),
-    format.simple()
-  ),
-  transports: [
-    new transports.Console({
-      format: format.combine(
-        format.timestamp(),
-        format.colorize(),
-        format.simple()
-      )
-    }),
-  ]
+	format: format.combine(
+		format.timestamp(),
+		format.simple()
+	),
+	transports: [
+		new transports.Console({
+			format: format.combine(
+				format.timestamp(),
+				format.colorize(),
+				format.simple()
+			)
+		}),
+	]
 })
 
 // TODO: Add better support for configuration of port
