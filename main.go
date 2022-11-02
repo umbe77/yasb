@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -9,8 +8,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello, world")
-
 	app := fiber.New()
 
 	app.Get("/", func(c *fiber.Ctx) error {
