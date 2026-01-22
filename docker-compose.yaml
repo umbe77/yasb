@@ -1,0 +1,21 @@
+
+services:
+  yasb:
+    build:
+      context: .
+    container_name: yasb
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+  mongodb:
+    container_name: yasb_mongo
+    image: mongo:noble
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo_data:/data/db

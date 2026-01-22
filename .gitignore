@@ -22,8 +22,6 @@
 # Go workspace file
 go.work
 
-### Go Patch ###
-/vendor/
-/Godeps/
-
 yasb
+mongo_data/
+tmp/

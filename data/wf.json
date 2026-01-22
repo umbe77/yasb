@@ -1,0 +1,17 @@
+{
+	"name": "Prova 1",
+	"code": "prv1",
+	"trigger": {
+		"type": "http",
+		"endpoint": "/prova1",
+		"method": "POST",
+		"schema": "{}"
+	},
+	"actions": [
+		{
+			"type": "map",
+			"code": "mapinput",
+			"k": ""
+		}
+	]
+}

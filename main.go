@@ -11,11 +11,13 @@ func main() {
 	app := fiber.New()
 
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.JSON(fiber.Map{
+			"message": "Hello, World!!!",
+		})
 	})
 
 	app.All("/service", handlers.ExecuteService)
 
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(":8080"))
 
 }

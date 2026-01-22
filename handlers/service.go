@@ -3,14 +3,15 @@ package handlers
 import (
 	"context"
 	"log"
-	"strings"
 
 	"github.com/gofiber/fiber/v2"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 // TODO: Implement Sample and example pipeline
 
-type Message map[string]interface{}
+type Message map[string]any
 
 func trigger(ctx context.Context, msg Message) (<-chan Message, error) {
 
@@ -39,7 +40,7 @@ func capitalize(ctx context.Context, cancel context.CancelFunc, msg <-chan Messa
 		for {
 			select {
 			case <-ctx.Done():
-				break
+				return
 			case m, ok := <-msg:
 				if ok {
 					val, isok := m["name"]
@@ -47,7 +48,10 @@ func capitalize(ctx context.Context, cancel context.CancelFunc, msg <-chan Messa
 						cancel()
 						return
 					}
-					m["name"] = strings.Title(val.(string))
+
+					caser := cases.Title(language.English)
+
+					m["name"] = caser.String(val.(string))
 
 					out <- m
 					log.Printf("%v", m)
@@ -67,6 +71,7 @@ func sink(ctx context.Context, cancel context.CancelFunc, in <-chan Message) Mes
 	for {
 		select {
 		case <-ctx.Done():
+			return nil
 		case m, ok := <-in:
 			if !ok {
 				log.Print("SINK cannot read channel")
