@@ -1,15 +1,20 @@
 package models
 
-type Message struct{
-	data map[string]any
+import (
+	"fmt"
+)
+
+type Message map[string]any
+
+type ErrorMessage struct {
+	Message string
+	Error   string
 }
 
-func NewMessage() *Message{
-	return &Message{
-		data: make(map[string]any),
+func GetErrorMessage(msg string, err error) ErrorMessage {
+	return ErrorMessage{
+		Message: msg,
+		Error:   fmt.Sprintf("%s", err),
 	}
 }
 
-func (m *Message) Get() map[string]any {
-	return m.data
-}

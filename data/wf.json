@@ -7,11 +7,10 @@
 		"method": "POST",
 		"schema": "{}"
 	},
-	"actions": [
-		{
-			"type": "map",
-			"code": "mapinput",
-			"k": ""
-		}
-	]
+	"startAction": {
+        "type": "http",
+        "verb": "GET",
+        "endpoint": "https://jsonplaceholder.typicode.com/posts",
+        "nextAction": null
+    }
 }

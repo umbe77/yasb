@@ -25,3 +25,4 @@ go.work
 yasb
 mongo_data/
 tmp/
+.env

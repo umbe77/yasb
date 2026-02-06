@@ -1,12 +1,17 @@
 package models
 
 type Workflow struct {
-	Trigger Action
-	Actions []Action
+	Code        string
+	Name        string
+	Trigger     Trigger
+	StartAction Action
 }
 
-func NewWorkflow(acts []Action) *Workflow {
+func NewWorkflow(code string, name string, trigger Trigger, act Action) *Workflow {
 	return &Workflow{
-		Actions: acts,
+		Code:        code,
+		Name:        name,
+		Trigger:     trigger,
+		StartAction: act,
 	}
 }

@@ -3,11 +3,16 @@ services:
   yasb:
     build:
       context: .
+      dockerfile: Dockerfile
     container_name: yasb
+    environment:
+      - MONGO_DB_URI=mongodb://mongo:mongo@mongodb:27017/
     ports:
       - 8080:8080
     volumes:
-      - .:/app
+      - ./:/app
+    depends_on:
+      - mongodb
   mongodb:
     container_name: yasb_mongo
     image: mongo:noble
