@@ -9,7 +9,7 @@ import (
 )
 
 type Config struct {
-	MongoUri string `envconfig:"mongodb_uri"`
+	MongoUri string `envconfig:"mongo_db_uri"`
 }
 
 var cfg Config
