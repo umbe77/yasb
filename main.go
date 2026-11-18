@@ -5,6 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/logger"
+	_ "github.com/umbe77/yasb/actions"
 	"github.com/umbe77/yasb/config"
 	"github.com/umbe77/yasb/handlers"
 	"github.com/umbe77/yasb/store"

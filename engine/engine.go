@@ -12,7 +12,7 @@ type Engine struct {
 }
 
 func NewEngine() *Engine {
-	return &Engine{}
+	return &Engine{workflows: make(map[string]models.Workflow)}
 }
 
 func (e *Engine) Init(workflows []models.Workflow) {
@@ -22,14 +22,15 @@ func (e *Engine) Init(workflows []models.Workflow) {
 }
 
 func (e *Engine) AddWorflow(wf models.Workflow) error {
-	if _, ok := e.workflows[wf.Code]; !ok {
-		e.workflows[wf.Code] = wf
+	if _, ok := e.workflows[wf.Code]; ok {
+		return fmt.Errorf("cannot add workflow %s, it is already added", wf.Code)
 	}
-	return fmt.Errorf("Cannot add workflow %s, it is just added", wf.Code)
+	e.workflows[wf.Code] = wf
+	return nil
 }
 
 func (e *Engine) Execute(ctx context.Context, wf *models.Workflow, m *models.Message) error {
-	for currentAction := wf.StartAction; currentAction != nil; currentAction = currentAction.Next() {
+	for currentAction := wf.StartAction.Action; currentAction != nil; currentAction = currentAction.Next() {
 		if err := currentAction.Exec(ctx, m); err != nil {
 			return err
 		}

@@ -10,7 +10,8 @@ import (
 )
 
 const (
-	db_name string = "yasb"
+	db_name       string = "yasb"
+	workflowsColl string = "workflows"
 )
 
 type Storage struct {
@@ -37,7 +38,7 @@ func (s *Storage) GetWorflows(ctx context.Context, json_filter string) ([]models
 		return nil, err
 	}
 
-	coll := s.getCollection("workflows")
+	coll := s.getCollection(workflowsColl)
 	cursor, err := coll.Find(ctx, filter)
 	if err != nil {
 		return nil, err
@@ -52,7 +53,7 @@ func (s *Storage) GetWorflows(ctx context.Context, json_filter string) ([]models
 }
 
 func (s *Storage) AddWorkflow(ctx context.Context, wf models.Workflow) error {
-	coll := s.getCollection("workflow")
+	coll := s.getCollection(workflowsColl)
 	if _, err := coll.InsertOne(ctx, wf); err != nil {
 		return err
 	}

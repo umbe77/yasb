@@ -26,3 +26,4 @@ yasb
 mongo_data/
 tmp/
 .env
+reports/

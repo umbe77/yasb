@@ -4,13 +4,15 @@
 	"trigger": {
 		"type": "http",
 		"endpoint": "/prova1",
-		"method": "POST",
+		"verb": "POST",
 		"schema": "{}"
 	},
 	"startAction": {
-        "type": "http",
-        "verb": "GET",
-        "endpoint": "https://jsonplaceholder.typicode.com/posts",
-        "nextAction": null
-    }
+		"type": "http",
+		"action": {
+			"verb": "GET",
+			"endpoint": "https://jsonplaceholder.typicode.com/posts",
+			"nextAction": null
+		}
+	}
 }

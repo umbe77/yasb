@@ -24,18 +24,18 @@ func GetWorflows(db *store.Storage) func(c fiber.Ctx) error {
 func AddWorkflow(db *store.Storage) func(c fiber.Ctx) error {
 	return func(c fiber.Ctx) error {
 		if len(c.Body()) <= 0 {
-			c.Status(fiber.StatusInternalServerError)
-			return c.JSON(models.GetErrorMessage("Cannot get workflows", fmt.Errorf("no data")))
+			c.Status(fiber.StatusBadRequest)
+			return c.JSON(models.GetErrorMessage("Invalid workflow", fmt.Errorf("no data")))
 		}
 		var wf models.Workflow
 		if err := json.Unmarshal(c.Body(), &wf); err != nil {
-			c.Status(fiber.StatusInternalServerError)
-			return c.JSON(models.GetErrorMessage("Cannot get workflows", err))
+			c.Status(fiber.StatusBadRequest)
+			return c.JSON(models.GetErrorMessage("Invalid workflow", err))
 		}
 
 		if err := db.AddWorkflow(c.Context(), wf); err != nil {
 			c.Status(fiber.StatusInternalServerError)
-			return c.JSON(models.GetErrorMessage("Cannot get workflows", err))
+			return c.JSON(models.GetErrorMessage("Cannot add workflow", err))
 		}
 
 		return c.JSON(fiber.Map{

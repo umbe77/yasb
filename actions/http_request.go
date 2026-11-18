@@ -11,12 +11,16 @@ import (
 	"github.com/umbe77/yasb/models"
 )
 
+func init() {
+	models.RegisterAction("http", func() models.Action { return &HttpRequest{} })
+}
+
 type HttpRequest struct {
-	Endpoint   string            `json:"endpoint"`
-	Verb       string            `json:"verb"`
-	Body       map[string]any    `json:"body"`
-	Headers    map[string]string `json:"headers"`
-	NextAction models.Action     `json:"nextAction"`
+	Endpoint   string                `json:"endpoint" bson:"endpoint"`
+	Verb       string                `json:"verb" bson:"verb"`
+	Body       map[string]any        `json:"body" bson:"body"`
+	Headers    map[string]string     `json:"headers" bson:"headers"`
+	NextAction models.ActionEnvelope `json:"nextAction" bson:"nextAction"`
 	resp       map[string]any
 }
 
@@ -64,13 +68,14 @@ func (h *HttpRequest) Exec(ctx context.Context, m *models.Message) error {
 }
 
 func (h *HttpRequest) Next() models.Action {
-	return h.NextAction
+	return h.NextAction.Action
 }
 
 func (h *HttpRequest) Outputs() []models.Action {
-	return []models.Action{
-		h.NextAction,
+	if h.NextAction.Action == nil {
+		return []models.Action{}
 	}
+	return []models.Action{h.NextAction.Action}
 }
 
 func (h *HttpRequest) GetType() string {
